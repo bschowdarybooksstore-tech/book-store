@@ -37,7 +37,8 @@ const COUPONS = {
     'CVIBES20': { off: 0.20 },
     'DIWALI2026':{ off: 0.15},
     'DUSSEHRA25':{ off: 0.25},
-    'EBOOK15':{off: 0.15}
+    'EBOOK15':{off: 0.15},
+    'KEERTHIMAM50':{off: 0.50}
 };
 
 let cart = []; 
