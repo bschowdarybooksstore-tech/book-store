@@ -1,20 +1,19 @@
 const PRODUCTS = {
     'Python': [
-        {id: 101, name: 'python basics for beginners', price: 499, originalprice: 999, pages: 120, size: '12MB', desc: 'Learn the worlds most popular programming language in just 20 days! Designed for people who think coding is too hard, this book uses plain English and hands-on projects to turn you into a coder fast. No math degree required.', img: 'https://placehold.co/400x600?text=Python+programming'},
-        {id: 102, name: 'python Roadmapfor beginners', price: 99, originalprice: 199, pages: 20, size: '2MB', desc: 'Stop getting lost in random YouTube tutorials. This visual roadmap provides the exact 11-step path used by professional developers to master Python. Designed by Team B.S.CHOWDARY.', img: 'https://placehold.co/400x600?text=Python+ROADMAP'},
+        {id: 101, name: 'python basics for beginners', price: 99, originalprice: 249, desc: 'Learn the worlds most popular programming language in just 20 days! Designed for people who think coding is too hard, this book uses plain English and hands-on projects to turn you into a coder fast. No math degree required.', img: 'https://placehold.co/400x600?text=Python+programming'},
+        {id: 102, name: 'python Roadmapfor beginners', price: 59, originalprice: 149, desc: 'Stop getting lost in random YouTube tutorials. This visual roadmap provides the exact 11-step path used by professional developers to master Python. Designed by Team B.S.CHOWDARY.', img: 'https://placehold.co/400x600?text=Python+ROADMAP'},
     ],
     'Computer basics':[
-        {id: 301, name: 'Computer basics for Beginners', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Basics of Computer, Explaining in a simpler style such that every learner can understand', img: 'https://placehold.co/400x600?text=Computer basics'},
+        {id: 301, name: 'Computer basics for Beginners', price: 89, originalprice: 179, desc: 'Master the Basics of Computer, Explaining in a simpler style such that every learner can understand', img: 'https://placehold.co/400x600?text=Computer basics'},
     ],   
     'Html': [
-        {id: 501, name: 'Basics of the HTML', price: 399, originalprice: 499, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
+        {id: 501, name: 'Basics of the HTML', price: 89, originalprice: 399, desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
     ],
     'English':[
-        {id: 601, name: 'English Grammar Part 1', price: 299, originalprice: 799, pages: 95, size: '10MB', desc: 'Speak and write with 100% confidence. This is a "no-fluff" guide to English grammar, focusing on the rules that actually matter in exams and professional life. Perfect for students and those preparing for competitive interviews.', img: 'https://placehold.co/400x600?text=ENGLISH GRAMMAR'},
+        {id: 601, name: 'English Grammar Part 1', price: 99, originalprice: 199, desc: 'Speak and write with 100% confidence. This is a "no-fluff" guide to English grammar, focusing on the rules that actually matter in exams and professional life. Perfect for students and those preparing for competitive interviews.', img: 'https://placehold.co/400x600?text=ENGLISH GRAMMAR'},
     ],
     'Stock Market':[
-        {id: 701, name: 'Stock market for Beginners', price: 299, originalprice: 699, pages: 100, size: '10MB', desc: 'Stop being intimidated by the stock market. This book is a simple, risk-aware guide for anyone in India looking to build wealth. We take you from the history of trading to placing your first buy order, all while keeping your money safe through SEBI regulations.', img: 'https://placehold.co/400x600?text=STOCK+MARKET'},
-        {id: 702, name: 'History of Stocks', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn the history of stock market and also the most used trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
+        {id: 701, name: 'Stock market for Beginners', price: 159, originalprice: 399, desc: 'Stop being intimidated by the stock market. This book is a simple, risk-aware guide for anyone in India looking to build wealth. We take you from the history of trading to placing your first buy order, all while keeping your money safe through SEBI regulations.', img: 'https://placehold.co/400x600?text=STOCK+MARKET'},
     ],
 
 };
@@ -26,7 +25,6 @@ const COUPONS = {
     'DIWALI2026':{ off: 0.15},
     'DUSSEHRA25':{ off: 0.25},
     'EBOOK15':{off: 0.15},
-    'KEERTHIMAM50':{off: 0.50}
 };
 
 let cart = []; 
@@ -65,8 +63,6 @@ function openPreview(id, cat) {
     document.getElementById('preview-title').innerText = b.name;
     document.getElementById('preview-img').src = b.img;
     document.getElementById('preview-desc').innerText = b.desc;
-    document.getElementById('meta-pages').innerText = b.pages + " Pages";
-    document.getElementById('meta-size').innerText = b.size;
     document.getElementById('preview-action').innerHTML = `
     <button class="btn btn-p" onclick="addToCart(${b.id},'${cat}'); document.getElementById('preview-overlay').style.display='none'">Buy Now - ₹${b.price}</button>
     `;
@@ -101,7 +97,7 @@ function applyPromo() {
     if(COUPONS[code]) {
         discount = COUPONS[code].off;
         document.getElementById('coupon-msg').innerText = "Applied!";
-        showBlastEffect(); // 🎉 trigger blast effect
+        showBlastEffect(); 
         showConfettiBlast();
 
     } else { 
@@ -129,17 +125,15 @@ function verifyLock() {
     const emailVal = document.getElementById('user-email').value;
     const nameVal = document.getElementById('user-name').value;
     const phoneVal = document.getElementById('user-whatsapp').value;
-    const utrVal = document.getElementById('utr-input').value;
     const checkOk = document.getElementById('agree-check').checked;
 
     const isEmailValid = emailVal.includes('@') && emailVal.includes('.');
     const isNameValid = nameVal.trim().length >= 3; 
     const isPhoneValid = phoneVal.trim().length >= 10; 
-    const isUtrValid = utrVal.trim().length >= 10; 
 
     const submitBtn = document.getElementById('submit-final');
     
-    if (isEmailValid && isNameValid && isPhoneValid && isUtrValid && checkOk) {
+    if (isEmailValid && isNameValid && isPhoneValid && checkOk) {
         submitBtn.disabled = false;
         submitBtn.style.opacity = "1"; 
     } else {
@@ -162,18 +156,17 @@ function handleFormSubmission() {
     const discountAmount = Math.round(originalPrice * discount); 
     const finalTotal = originalPrice - discountAmount;
 
-    const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScBbVmjTI-zvZKpH_wWQBpfmvkFH2O7d8yAyODApyj7cnsG1w/formResponse?usp=pp_url` + 
-        `&entry.1142408861=${encodeURIComponent(name)}` +
-        `&entry.1524366174=${encodeURIComponent(whatsapp)}` +
-        `&entry.687794501=${encodeURIComponent(email)}` +
-        `&entry.398043900=${encodeURIComponent(books)}` +
-        `&entry.1159049155=${encodeURIComponent(finalTotal)}` +
-        `&entry.2145820642=${encodeURIComponent(utr)}` +
-        `&entry.1699157614=${encodeURIComponent(orderID)}` +
-        `&entry.56363711=${encodeURIComponent(couponApplied)}` +
-        `&entry.1354362077=${encodeURIComponent(discountAmount)}` +
-        `&entry.1241446376=${encodeURIComponent(originalPrice)}`;
-
+const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScBbVmjTI-zvZKpH_wWQBpfmvkFH2O7d8yAyODApyj7cnsG1w/viewform?usp=pp_url` +
+    `&entry.1142408861=${encodeURIComponent(name)}` +
+    `&entry.1524366174=${encodeURIComponent(whatsapp)}` +
+    `&entry.687794501=${encodeURIComponent(email)}` +
+    `&entry.398043900=${encodeURIComponent(books)}` +
+    `&entry.1159049155=${encodeURIComponent(finalTotal)}` +
+    `&entry.1699157614=${encodeURIComponent(orderID)}` +
+    `&entry.56363711=${encodeURIComponent(couponApplied)}` +
+    `&entry.1354362077=${encodeURIComponent(discountAmount)}` +
+    `&entry.1241446376=${encodeURIComponent(originalPrice)}`; 
+    
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = formUrl;
@@ -270,3 +263,4 @@ function sendSupportQuery() {
     showPage('home');
 
 }
+
