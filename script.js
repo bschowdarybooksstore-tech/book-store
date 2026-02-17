@@ -2,23 +2,12 @@ const PRODUCTS = {
     'Python': [
         {id: 101, name: 'python basics for beginners', price: 499, originalprice: 999, pages: 120, size: '12MB', desc: 'Learn the worlds most popular programming language in just 20 days! Designed for people who think coding is too hard, this book uses plain English and hands-on projects to turn you into a coder fast. No math degree required.', img: 'https://placehold.co/400x600?text=Python+programming'},
         {id: 102, name: 'python Roadmapfor beginners', price: 99, originalprice: 199, pages: 20, size: '2MB', desc: 'Stop getting lost in random YouTube tutorials. This visual roadmap provides the exact 11-step path used by professional developers to master Python. Designed by Team B.S.CHOWDARY.', img: 'https://placehold.co/400x600?text=Python+ROADMAP'},
-        {id: 103, name: 'DSA with Python', price: 399, originalprice:599, pages: 150, size: '10MB', desc: 'Complete Python DSA journey. Covers basic DSA problem solving.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'}
-    ],
-    'Java':[
-        {id: 201, name: 'Javabasics for Beginners', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Learn the worlds most popular programming language in just 10 days! Designed for people who think coding is too hard, this book uses plain English and hands-on projects to turn you into a coder fast.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
-        {id: 202, name: 'Java DSA', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Learn the DSA in JAVA! Designed for people who think coding is too hard, to turn you into a coder fast.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
     ],
     'Computer basics':[
         {id: 301, name: 'Computer basics for Beginners', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Basics of Computer, Explaining in a simpler style such that every learner can understand', img: 'https://placehold.co/400x600?text=Computer basics'},
-    ],
-    'C language':[
-        {id: 401, name: 'C Language Basics', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=BASICS OF C'},
-        {id: 402, name: 'DSA with C', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
-        {id: 403, name: 'Simple projects with C', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=Projects'}
-    ],    
+    ],   
     'Html': [
         {id: 501, name: 'Basics of the HTML', price: 399, originalprice: 499, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
-        {id: 502, name: 'Basics of Web Development', price: 399, originalprice:459, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'}
     ],
     'English':[
         {id: 601, name: 'English Grammar Part 1', price: 299, originalprice: 799, pages: 95, size: '10MB', desc: 'Speak and write with 100% confidence. This is a "no-fluff" guide to English grammar, focusing on the rules that actually matter in exams and professional life. Perfect for students and those preparing for competitive interviews.', img: 'https://placehold.co/400x600?text=ENGLISH GRAMMAR'},
@@ -26,7 +15,6 @@ const PRODUCTS = {
     'Stock Market':[
         {id: 701, name: 'Stock market for Beginners', price: 299, originalprice: 699, pages: 100, size: '10MB', desc: 'Stop being intimidated by the stock market. This book is a simple, risk-aware guide for anyone in India looking to build wealth. We take you from the history of trading to placing your first buy order, all while keeping your money safe through SEBI regulations.', img: 'https://placehold.co/400x600?text=STOCK+MARKET'},
         {id: 702, name: 'History of Stocks', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn the history of stock market and also the most used trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
-        {id: 703, name: 'Trading Blueprint', price: 399, originalprice: 999, pages: 95, size: '10MB', desc: 'Master the Stock Market. Learn Technical Analysis and Option Trading strategies.', img: 'https://placehold.co/400x600?text=NOT+AVAILABLE'},
     ],
 
 };
@@ -280,4 +268,5 @@ function sendSupportQuery() {
 
     alert("Query Submitted! We will verify Order #" + orderid + " and email you shortly.");
     showPage('home');
+
 }
