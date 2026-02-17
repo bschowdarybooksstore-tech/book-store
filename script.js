@@ -146,12 +146,9 @@ function handleFormSubmission() {
     const name = document.getElementById('user-name').value;
     const whatsapp = document.getElementById('user-whatsapp').value;
     const email = document.getElementById('user-email').value;
-    const utr = document.getElementById('utr-input').value;
     const books = cart.map(c => c.name).join(", ");
     const orderID = typeof activeOID !== 'undefined' ? activeOID : "N/A";
-
-    const originalPrice = cart.reduce((sum, item) => sum + item.price, 0); 
-    
+    const originalPrice = cart.reduce((sum, item) => sum + item.price, 0);    
     const couponApplied = (discount > 0) ? document.getElementById('coupon-input').value.toUpperCase() : "NONE"; 
     const discountAmount = Math.round(originalPrice * discount); 
     const finalTotal = originalPrice - discountAmount;
@@ -263,4 +260,5 @@ function sendSupportQuery() {
     showPage('home');
 
 }
+
 
