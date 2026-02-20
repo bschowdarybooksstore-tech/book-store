@@ -20,10 +20,7 @@ const PRODUCTS = {
 
 
 const COUPONS = { 
-    'WELCOME20': { off: 0.20 },
     'CVIBES20': { off: 0.20 },
-    'DIWALI2026':{ off: 0.15},
-    'DUSSEHRA25':{ off: 0.25},
     'EBOOK15':{off: 0.15},
 };
 
@@ -152,17 +149,18 @@ function handleFormSubmission() {
     const couponApplied = (discount > 0) ? document.getElementById('coupon-input').value.toUpperCase() : "NONE"; 
     const discountAmount = Math.round(originalPrice * discount); 
     const finalTotal = originalPrice - discountAmount;
+const formUrl =`https://docs.google.com/forms/d/e/1FAIpQLScBbVmjTI-zvZKpH_wWQBpfmvkFH2O7d8yAyODApyj7cnsG1w/viewform?usp=pp_url`+
 
-const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScBbVmjTI-zvZKpH_wWQBpfmvkFH2O7d8yAyODApyj7cnsG1w/viewform?usp=pp_url` +
-    `&entry.1142408861=${encodeURIComponent(name)}` +
-    `&entry.1524366174=${encodeURIComponent(whatsapp)}` +
-    `&entry.687794501=${encodeURIComponent(email)}` +
-    `&entry.398043900=${encodeURIComponent(books)}` +
-    `&entry.1159049155=${encodeURIComponent(finalTotal)}` +
-    `&entry.1699157614=${encodeURIComponent(orderID)}` +
-    `&entry.56363711=${encodeURIComponent(couponApplied)}` +
-    `&entry.1354362077=${encodeURIComponent(discountAmount)}` +
-    `&entry.1241446376=${encodeURIComponent(originalPrice)}`; 
+
+    `&entry.1142408861=${encodeURIComponent(name)}`+
+    `&entry.1524366174=${encodeURIComponent(whatsapp)}`+
+    `&entry.687794501=${encodeURIComponent(email)}`+
+    `&entry.398043900=${encodeURIComponent(books)}`+
+    `&entry.1159049155=${encodeURIComponent(originalPrice)}`+
+    `&entry.1699157614=${encodeURIComponent(orderId)}`+
+    `&entry.56363711=${encodeURIComponent(couponApplied)}`+
+    `&entry.1354362077=${encodeURIComponent(discountAmount)}`+
+    `&entry.1241446376=${encodeURIComponent(finalTotal)}`; 
     
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
@@ -260,5 +258,6 @@ function sendSupportQuery() {
     showPage('home');
 
 }
+
 
 
