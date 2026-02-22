@@ -144,24 +144,25 @@ function handleFormSubmission() {
     const whatsapp = document.getElementById('user-whatsapp').value;
     const email = document.getElementById('user-email').value;
     const books = cart.map(c => c.name).join(", ");
-    const orderID = typeof activeOID !== 'undefined' ? activeOID : "N/A";
+    const orderID = (typeof activeOID !== 'undefined' && activeOID !== "") ? activeOID : "BSC-" + Math.random().toString(36).substr(2, 5).toUpperCase();
+
     const originalPrice = cart.reduce((sum, item) => sum + item.price, 0);    
-    const couponApplied = (discount > 0) ? document.getElementById('coupon-input').value.toUpperCase() : "NONE"; 
-    const discountAmount = Math.round(originalPrice * discount); 
+    const discountAmount = Math.round(originalPrice * (discount || 0)); 
     const finalTotal = originalPrice - discountAmount;
-const formUrl =`https://docs.google.com/forms/d/e/1FAIpQLScBbVmjTI-zvZKpH_wWQBpfmvkFH2O7d8yAyODApyj7cnsG1w/viewform?usp=pp_url`+
+    const couponApplied = (discount > 0) ? document.getElementById('coupon-input').value.toUpperCase() : "NONE"; 
 
+    const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScBbVmjTI-zvZKpH_wWQBpfmvkFH2O7d8yAyODApyj7cnsG1w/formResponse?usp=pp_url` +
+        `&entry.1142408861=${encodeURIComponent(name)}` +
+        `&entry.1524366174=${encodeURIComponent(whatsapp)}` +
+        `&entry.687794501=${encodeURIComponent(email)}` +
+        `&entry.398043900=${encodeURIComponent(books)}` +
+        `&entry.1159049155=${encodeURIComponent(finalTotal)}` +
+        `&entry.1699157614=${encodeURIComponent(orderID)}` +   
+        `&entry.56363711=${encodeURIComponent(couponApplied)}` + 
+        `&entry.1354362077=${encodeURIComponent(discountAmount)}` +
+        `&entry.1241446376=${encodeURIComponent(originalPrice)}` + 
+        `&submit=Submit`;
 
-    `&entry.1142408861=${encodeURIComponent(name)}`+
-    `&entry.1524366174=${encodeURIComponent(whatsapp)}`+
-    `&entry.687794501=${encodeURIComponent(email)}`+
-    `&entry.398043900=${encodeURIComponent(books)}`+
-    `&entry.1159049155=${encodeURIComponent(originalPrice)}`+
-    `&entry.1699157614=${encodeURIComponent(orderId)}`+
-    `&entry.56363711=${encodeURIComponent(couponApplied)}`+
-    `&entry.1354362077=${encodeURIComponent(discountAmount)}`+
-    `&entry.1241446376=${encodeURIComponent(finalTotal)}`; 
-    
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = formUrl;
@@ -171,7 +172,7 @@ const formUrl =`https://docs.google.com/forms/d/e/1FAIpQLScBbVmjTI-zvZKpH_wWQBpf
         showPage('success');
         cart = [];
         discount = 0; 
-        document.getElementById('coupon-input').value = "";
+        if(document.getElementById('coupon-input')) document.getElementById('coupon-input').value = "";
         updateCartDisplay();
     }, 1000);
 }
@@ -258,6 +259,7 @@ function sendSupportQuery() {
     showPage('home');
 
 }
+
 
 
 
