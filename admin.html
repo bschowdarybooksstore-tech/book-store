@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | B.S.CHOWDARY STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #010a08; --surface: #0a1f1a; --primary: #10b981; --accent: #fbbf24; --text: #f1f5f9; --border: rgba(255, 255, 255, 0.08); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 20px; }
+        
+        .container { max-width: 1100px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--surface); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+        .stat-card h3 { color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card p { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-top: 10px; }
+
+        .order-card { 
+            background: var(--surface); border: 1px solid var(--border); border-radius: 15px; 
+            padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s ease;
+        }
+        .order-card.verified { border-left: 4px solid var(--primary); opacity: 0.7; }
+        .order-info b { font-size: 1.1rem; color: var(--text); }
+        .order-info p { color: #94a3b8; font-size: 0.9rem; margin-top: 5px; }
+        
+        .utr-badge { background: rgba(251, 191, 36, 0.1); color: var(--accent); padding: 5px 12px; border-radius: 6px; font-weight: 800; font-family: monospace; border: 1px dashed var(--accent); }
+        
+        .btn-verify { background: var(--primary); color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-verify:hover { transform: scale(1.05); filter: brightness(1.1); }
+        .btn-verify:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; }
+
+        .status-tag { color: var(--primary); font-weight: 800; display: flex; align-items: center; gap: 5px; }
+        .refresh-btn { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+        .btn-unpaid {
+    background: transparent;
+    color: var(--error);
+    border: 1px solid var(--error);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-unpaid:hover {
+    background: var(--error);
+    color: white;
+}
+
+.order-card.unpaid {
+    border-left: 4px solid var(--error);
+    background: rgba(239, 68, 68, 0.02);
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Store <span style="color:var(--primary)">Management</span></h1>
+        <button class="refresh-btn" onclick="fetchOrders()">🔄 Refresh Orders</button>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card"><h3>Total Orders</h3><p id="stat-count">0</p></div>
+        <div class="stat-card"><h3>Total Revenue</h3><p id="stat-revenue">₹0</p></div>
+        <div class="stat-card"><h3>Pending Audits</h3><p id="stat-pending" style="color:var(--accent)">0</p></div>
+    </div>
+
+    <div id="order-list">
+        <p style="text-align: center; color: #94a3b8;">Loading secure database...</p>
+    </div>
+</div>
+
+<script>
+// Inside your admin.html <script> tag
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3w4HgvCAuPezQD-YUC49GVjXBYfu-ccBS6Ua85TPiNX04qfKUOo3twyB38JesukmW/exec";
+
+    async function fetchOrders() {
+        try {
+            const response = await fetch(SCRIPT_URL);
+            const data = await response.json();
+            renderOrders(data);
+        } catch (error) {
+            console.error("Fetch error:", error);
+            document.getElementById('order-list').innerHTML = "<p style='color:red'>Failed to connect to Google Sheets API.</p>";
+        }
+    }
+
+function renderOrders(orders) {
+    const list = document.getElementById('order-list');
+    let revenue = 0;
+    let pending = 0;
+
+    const html = orders.map(order => {
+        const status = order['Column 11'];
+        const isVerified = status === 'VERIFIED ✅';
+        const isUnpaid = status === 'PENDING / UNPAID ❌';
+        const amount = parseFloat(order['Total Amount Paid']) || 0;
+        
+        if (isVerified) revenue += amount;
+        else pending++;
+
+        return `
+            <div class="order-card ${isVerified ? 'verified' : ''} ${isUnpaid ? 'unpaid' : ''}">
+                <div class="order-info">
+                    <b>${order['Full Name']}</b> <small style="color:var(--primary)">#${order['Order ID']}</small>
+                    <p>${order['Books Purchased']}</p>
+                    <p>📧 ${order['MAIL ID']} | 📱 ${order['WhatsApp number']}</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="margin-bottom: 10px; font-weight:800;">₹${amount}</div>
+                    <span class="utr-badge">UTR: ${order['Order ID']}</span>
+                </div>
+                <div id="btn-container-${order.row}" style="display:flex; flex-direction:column; gap:8px;">
+                    ${isVerified 
+                        ? `<span class="status-tag">Verified ✅</span>` 
+                        : isUnpaid 
+                            ? `<span style="color:var(--error); font-weight:800;">MARKED UNPAID ❌</span>
+                               <button class="btn-verify" onclick="verifyOrder(${order.row})">Verify Now</button>`
+                            : `<button class="btn-verify" onclick="verifyOrder(${order.row})">Confirm Payment</button>
+                               <button class="btn-unpaid" onclick="markUnpaid(${order.row})">Not Paid</button>`
+                    }
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    list.innerHTML = html;
+    document.getElementById('stat-count').innerText = orders.length;
+    document.getElementById('stat-revenue').innerText = "₹" + revenue;
+    document.getElementById('stat-pending').innerText = pending;
+}
+
+// New function to handle unpaid status
+async function markUnpaid(row) {
+    if(!confirm("Mark this order as Unpaid/Fake?")) return;
+    
+    const container = document.getElementById(`btn-container-${row}`);
+    container.innerHTML = "<small>Updating...</small>";
+
+    await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({ row: row, action: "unpaid" })
+    });
+    
+    setTimeout(fetchOrders, 1000);
+}
+    async function verifyOrder(row) {
+        if(!confirm("Have you cross-checked this payment in your Bank/PhonePe?")) return;
+        
+        const btn = document.querySelector(`#btn-container-${row} button`);
+        btn.innerText = "Updating...";
+        btn.disabled = true;
+
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Essential for Google Apps Script POST
+                body: JSON.stringify({ row: row })
+            });
+            
+            // Because of 'no-cors', we manually refresh after a short delay
+            setTimeout(fetchOrders, 1500);
+        } catch (error) {
+            alert("Update failed. Check your Apps Script deployment.");
+            btn.disabled = false;
+        }
+    }
+
+    window.onload = fetchOrders;
+</script>
+
+</body>
+</html>
